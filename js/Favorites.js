@@ -1,85 +1,96 @@
+export class GithubUser {
+  static search(username) {
+    const endpoint = `https://api.github.com/users/${username}`;
+
+    return fetch(endpoint)
+      .then((data) => data.json())
+      .then(({ login, name, public_repos, followers }) => ({
+        login,
+        name,
+        public_repos,
+        followers,
+      }));
+  }
+}
+
 class Favorites {
-    constructor(root){
-        this.root = document.querySelector(root)
-        this.tbody = this.root.querySelector('table tbody')
-        this.load()
-    }
+  constructor(root) {
+    this.root = document.querySelector(root);
+    this.tbody = this.root.querySelector("table tbody");
+    this.load();
+  }
 
-    load(){
-        // this.users = [
-        //     {
-        //     login: 'alan589',
-        //     name: 'Alan Cavalcante',
-        //     public_repos: '55',
-        //     followers: '1000'        
-        //     },
-        //     {
-        //     login: 'maykbrito',
-        //     name: 'AJulio cesar',
-        //     public_repos: '222',
-        //     followers: '123000'        
-        //     },
-        //     {
-        //     login: 'allan',
-        //     name: 'Joao Fabio',
-        //     public_repos: '515',
-        //     followers: '11000'        
-        //     }
-        // ]
+  load() {
+    // this.users = [
+    //     {
+    //     login: 'alan589',
+    //     name: 'Alan Cavalcante',
+    //     public_repos: '55',
+    //     followers: '1000'
+    //     },
+    //     {
+    //     login: 'maykbrito',
+    //     name: 'AJulio cesar',
+    //     public_repos: '222',
+    //     followers: '123000'
+    //     },
+    //     {
+    //     login: 'allan',
+    //     name: 'Joao Fabio',
+    //     public_repos: '515',
+    //     followers: '11000'
+    //     }
+    // ]
 
-        this.users = JSON.parse(localStorage.getItem('@github-users:')) || []
-        console.log(this.users)
-    }
+    this.users = JSON.parse(localStorage.getItem("@github-users:")) || [];
+    console.log(this.users);
+  }
 
-    delete(deletedUser){
-        const filteredUsers = this.users.filter(user => deletedUser.login !== user.login)
-        this.users = filteredUsers
-        this.update()
-    }
+  delete(deletedUser) {
+    const filteredUsers = this.users.filter(
+      (user) => deletedUser.login !== user.login
+    );
+    this.users = filteredUsers;
+    this.update();
+  }
 
-    add(user) {
-        this.users.push({
-            login: user,
-            name: 'teste',
-            public_repos: '0',
-            followers: '0'        
-            })
-    }
+  add(username) {
+    GithubUser.search(username).then((user) => {
+      this.users.push(user)
+      this.update()
+    });
+  }
 }
 
 export class FavoritesView extends Favorites {
-    constructor(root){
-        super(root)
-        this.update()
-    }
+  constructor(root) {
+    super(root);
+    this.update();
+  }
 
-    update(){
-
-        if(this.users.length !== 0)
-        {
-            this.removeAllTableRow()  
+  update() {
+    this.removeAllTableRow();
     
-            this.users.forEach((user) => {
-                const tr = this.tbody.appendChild(this.createTableRow(user))
-                tr.querySelector('.remove').onclick = () => {
-                    const isOk = confirm('Deletar?')
-                    if(isOk) {
-                        this.delete(user)
-                    }
-                }
-            })
-        }
-        else {
-            const tr = document.createElement('tr')
-            tr.innerHTML = '<td colspan="4" style="text-align:center;">No user</td>'
-            this.tbody.appendChild(tr)
-        }
-    }
+    if (this.users.length !== 0) {
+      this.users.forEach((user) => {
+        const tr = this.tbody.appendChild(this.createTableRow(user));
+        tr.querySelector(".remove").onclick = () => {
+          const isOk = confirm("Deletar?");
+          if (isOk) {
+            this.delete(user);
+          }
+        };
+      });
+    } else {
+        const tr = document.createElement("tr");
+        tr.innerHTML = '<td colspan="4" style="text-align:center;">No user</td>';
+        this.tbody.appendChild(tr);
+      }
+  }
 
-    createTableRow(user){
-
-        const tr = document.createElement('tr')
-        tr.innerHTML = `
+  createTableRow(user) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
             <td class="user">
                 <img src="https://www.github.com/${user.login}.png" alt="${user.login}'s photo">
                 <a href="https://www.github.com/${user.login}" target=_blank>
@@ -92,16 +103,15 @@ export class FavoritesView extends Favorites {
             <td>
                 <button class="remove">&times;</button>
             </td>
-        `
-        return tr
-    }
+        `;
+    return tr;
+  }
 
-    removeAllTableRow() {
-        const tbody = this.root.querySelector('table tbody')
+  removeAllTableRow() {
+    const tbody = this.root.querySelector("table tbody");
 
-        tbody.querySelectorAll('tr')
-        .forEach((tr) => {
-            tr.remove()
-        })
-    }
+    tbody.querySelectorAll("tr").forEach((tr) => {
+      tr.remove();
+    });
+  }
 }
