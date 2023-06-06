@@ -95,7 +95,11 @@ table tr:nth-child(even) {
 table td {
   padding: 1.5rem;
   text-align: left;
+  height: 8rem;
+  width: 19rem;
 }
+
+
 
 table * {
   font-size: 1.4rem;

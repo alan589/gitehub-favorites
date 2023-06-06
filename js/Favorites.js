@@ -108,20 +108,19 @@ export class FavoritesView extends Favorites {
 
     nextPage.addEventListener("click", () => {
       this.currentPage += 1;
-      if(this.currentPage <= totalPages) {
-        this.update()
-      }else {
-        this.currentPage = totalPages
+      if (this.currentPage <= totalPages) {
+        this.update();
+      } else {
+        this.currentPage = totalPages;
       }
     });
 
     previousPage.addEventListener("click", () => {
       this.currentPage -= 1;
-      if(this.currentPage >= 1) {
-        this.update()
-      }
-      else {
-        this.currentPage = 1
+      if (this.currentPage >= 1) {
+        this.update();
+      } else {
+        this.currentPage = 1;
       }
     });
 
@@ -145,7 +144,7 @@ export class FavoritesView extends Favorites {
 
   update() {
     this.removeAllTableRow();
-    console.log(this.currentPage)
+    console.log(this.currentPage);
     if (this.users.length !== 0) {
       this.displayUsers();
     } else {
@@ -157,13 +156,19 @@ export class FavoritesView extends Favorites {
 
   createTableRow(user) {
     const tr = document.createElement("tr");
+
+    const formatName = (name) => {
+      return name ? name.split(" ").slice(0, 2).join(" ") : user.login;
+    };
+
     tr.innerHTML = `
             <td class="user">
-                <img src="https://www.github.com/${user.login}.png" alt="${
-      user.login
-    }'s photo">
+                
                 <a href="https://www.github.com/${user.login}" target=_blank>
-                    <p>${user.name || ""}</p>
+                  <img src="https://www.github.com/${user.login}.png" alt="${user.login}'s photo">
+                </a>
+                <a href="https://www.github.com/${user.login}" target=_blank>
+                    <p>${formatName(user.name)}</p>
                     <span>${user.login}</span>
                 </a>
             </td>
