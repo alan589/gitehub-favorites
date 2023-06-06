@@ -25,9 +25,9 @@ body * {
 
 header {
   display: flex;
+  margin: 2.5rem 0;
   justify-content: space-between;
   align-items: center;
-  margin: 2.5rem 0;
 }
 
 header h1 {
@@ -145,3 +145,22 @@ td .remove:hover {
   white-space: nowrap;
   border-width: 0;
 }
+
+
+#pagination {
+
+}
+
+.page-link {
+  padding: 5px 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.page-link:hover {
+  background-color: #ddd;
+}
+
+
