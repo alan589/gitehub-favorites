@@ -1,6 +1,5 @@
-import { FavoritesView, GithubUser } from "./Favorites.js";
+import { FavoritesView } from "./FavoritesView.js";
 
 
 
 const favoritesView = new FavoritesView('#app')
-favoritesView.onAdd()

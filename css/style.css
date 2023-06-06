@@ -99,8 +99,6 @@ table td {
   width: 19rem;
 }
 
-
-
 table * {
   font-size: 1.4rem;
   color: var(--text-color);
@@ -150,21 +148,14 @@ td .remove:hover {
   border-width: 0;
 }
 
-
-#pagination {
-
-}
-
 .page-link {
   padding: 5px 10px;
   background-color: #f1f1f1;
   border: 1px solid #ccc;
-  cursor: pointer;
   margin: 0 5px;
+  cursor: pointer;
 }
 
 .page-link:hover {
   background-color: #ddd;
 }
-
-
