@@ -159,3 +159,17 @@ td .remove:hover {
 .page-link:hover {
   background-color: #ddd;
 }
+
+@media (max-width: 600px) {
+  table td {
+    width: 13rem;
+  }
+
+  table * {
+    font-size: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+  }
+}
